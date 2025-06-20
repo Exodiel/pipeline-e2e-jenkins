@@ -6,6 +6,11 @@ const app = express();
 app.use(express.json());
 
 
+app.get('/', (req, res) => {
+  res.status(200).send('Calculator API is ready and waiting for requests!');
+});
+
+
 app.post('/add', (req, res) => {
   try {
     const { a, b } = req.body;
