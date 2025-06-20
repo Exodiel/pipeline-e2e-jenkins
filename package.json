@@ -1,0 +1,31 @@
+{
+  "name": "realistic-pipeline-project",
+  "version": "1.0.0",
+  "description": "A realistic project with unit, api, and real E2E tests",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "build": "echo 'Build step complete.'",
+    "test:unit": "jest --testMatch='<rootDir>/test/unit/**/*.test.js'",
+    "test:api": "jest --testMatch='<rootDir>/test/api/**/*.test.js'",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test start http://localhost:3000 cy:run"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "cypress": "^13.13.0",
+    "cypress-junit-reporter": "^2.0.0",
+    "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "start-server-and-test": "^2.0.4",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "reporters": [
+      "default",
+      [ "jest-junit", { "outputDirectory": "results", "outputName": "jest-results.xml" } ]
+    ]
+  }
+}

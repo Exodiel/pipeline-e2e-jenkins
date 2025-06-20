@@ -1,0 +1,20 @@
+# Partimos de una imagen oficial de Cypress que ya incluye Node, Chrome y todas las dependencias.
+# CORRECCIÓN: Usamos una etiqueta específica y válida de la imagen.
+FROM cypress/browsers:node-22.16.0-chrome-137.0.7151.119-1-ff-139.0.4-edge-137.0.3296.62-1
+
+# Actualizamos e instalamos 'make' Y AHORA TAMBIÉN JAVA.
+# La imagen base es Debian, por lo que usamos apt-get.
+RUN apt-get update && apt-get install -y make openjdk-17-jre
+
+# Creamos y nos apropiamos del directorio de trabajo para el agente Jenkins
+RUN mkdir /home/jenkins && chown 1000:1000 /home/jenkins
+
+# Nos cambiamos a ese usuario y directorio
+USER 1000
+WORKDIR /home/jenkins
+
+# Copiamos el ejecutable del agente de Jenkins a nuestra imagen
+COPY --from=jenkins/inbound-agent:latest /usr/share/jenkins/agent.jar /home/jenkins/agent.jar
+
+# El comando por defecto al iniciar el contenedor será lanzar el agente
+ENTRYPOINT ["java", "-jar", "agent.jar"]
