@@ -15,7 +15,7 @@ pipeline {
         // Etapa 2: Instalar dependencias de forma limpia para CI
         stage('Install Dependencies') {
             steps {
-                sh 'npm ci'
+                sh 'npm install'
             }
         }
         
